@@ -22,7 +22,7 @@ $(document).ready(function () {
         identity = $(this).val();
         // Aquí puedes hacer lo que necesites con el valor seleccionado
         $("#data-table").DataTable().destroy();
-        actualizarTabla();
+        mostrarCuentaBanco();
     });
 
     $("#agregar-form").on("submit", function (event) {
@@ -55,29 +55,34 @@ $(document).ready(function () {
         );
 
         // Crear objeto con datos a enviar
-        // var dataToSend = {
-        //     cuenta_bancos: {
-        //         numero_cuenta: numero_cuenta,
-        //     },
-        // };
-        // // Convertir objeto a JSON
-        // var jsonData = JSON.stringify(dataToSend);
+        var dataToSend = {
+            cuenta_banco: {
+                numero_cuenta: numero_cuenta,
+                tipo_moneda: tipo_moneda,
+                saldo: saldo,
+                fecha_apertura: fecha_apertura,
+                estado: estado,
+                id_contacto: id_contacto,
+            },
+        };
+        // Convertir objeto a JSON
+        var jsonData = JSON.stringify(dataToSend);
 
-        // // Enviar datos a través de AJAX
-        // $.ajax({
-        //     url: "http://localhost:3000/api/v1/bancos/" + 1 + "/cuenta_bancos",
-        //     type: "POST",
-        //     contentType: "application/json",
-        //     data: jsonData,
-        //     success: function (response) {
-        //         // Actualizar tabla después de agregar nueva sucursal
-        //         $("#data-table").DataTable().destroy();
-        //         actualizarTabla();
-        //     },
-        //     error: function (jqXHR, textStatus, errorThrown) {
-        //         console.error(textStatus + " - " + errorThrown);
-        //     },
-        // });
+        // Enviar datos a través de AJAX
+        $.ajax({
+            url: "http://localhost:3000/api/v1/bancos/" + id_banco + "/cuenta_bancos",
+            type: "POST",
+            contentType: "application/json",
+            data: jsonData,
+            success: function (response) {
+                // Actualizar tabla después de agregar nueva sucursal
+                $("#data-table").DataTable().destroy();
+                mostrarCuentaBanco();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error(textStatus + " - " + errorThrown);
+            },
+        });
     });
     //ACTUALIZAR
     $("#actualizar-form").on("submit", function (event) {
@@ -116,7 +121,7 @@ $(document).ready(function () {
         $("#actualizar-modal").modal("hide");
     });
 
-    function actualizarTabla() {
+    function mostrarCuentaBanco() {
         $.ajax({
             url: "http://localhost:3000/api/v1/bancos/" + identity + "/cuenta_bancos",
             type: "GET",

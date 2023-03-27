@@ -1,0 +1,71 @@
+.btn-actualizar {
+    background-color: #f7c04a;
+    border-radius: 5px;
+}
+
+.btn-actualizar:hover {
+    background-color: #f7c04ab7;
+}
+
+.hit-the-floor {
+    color: #fff;
+    font-size: 4em;
+    font-weight: bold;
+    font-family: Helvetica;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+}
+
+.hit-the-floor {
+    text-align: center;
+}
+
+.dataTables_wrapper .pagination .page-item.active .page-link {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
+#data-table {
+    font-size: 20px;
+    color: #fff;
+    background-color: #005b89;
+    border: 2px solid #000;
+}
+#data-table th {
+    width: auto !important;
+    color: #fff;
+}
+#data-table td {
+    font-size: 16px;
+    width: auto !important;
+    color: #000;
+}
+/* #data-table tbody tr:nth-child(even) {
+    background-color: #e1eef4;
+}
+#data-table tbody tr:nth-child(even),
+#data-table tbody tr:nth-child(odd) {
+    color: #000;
+} */
+#data-table {
+    border-left: none;
+    border-right: none;
+}
+#data-table td {
+    border-bottom: 2px solid #000;
+}
+
+#data-table th:last-child,
+#data-table td:last-child {
+    text-align: center;
+}
+
+input.in {
+    background-color: #eee !important;
+    border: 2px solid #000 !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
+input.in:focus {
+    background-color: #bbb !important;
+    box-shadow: 0 0 5px 10px #bbb inset !important;
+}

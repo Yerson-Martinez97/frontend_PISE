@@ -1,0 +1,71 @@
+/*BOTONES DEL NAVBAR LATERAL IZQUIERDO*/
+.navizq {
+    background-color: #3c3c3c;
+}
+
+.navizqboton {
+    background: #3c3c3c;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #000;
+    transition: all 0.6s;
+}
+
+.navizqboton:hover {
+    background: #005b89;
+    color: #bad7e9;
+    box-shadow: 2px 5px 5px black;
+}
+
+.navsuprec {
+    background: #005b89;
+    border: 2px solid #000;
+}
+
+.btnlogout {
+    background: #000;
+    color: #fff;
+}
+.btnlogout:hover {
+    background: #222;
+    color: #fff;
+}
+
+/*BOTON CIERRE DE SESION*/
+.btngeneral {
+    box-sizing: border-box;
+    border-radius: 0.4em;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+    padding: 1em 1em;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+}
+
+/* .third {
+    border-color: #000;
+    color: #fff;
+    background-color: #850000;
+    box-shadow: 0 0 5px 0 #21282d inset, 0 0 0 0 #21282d;
+    -webkit-transition: all 150ms ease-in-out;
+    transition: all 0.3s ease-out;
+}
+.third:hover {
+    box-shadow: 0 0 5px 2px #21282d inset;
+    color: #fff;
+} */
+.third {
+    background-color: #005b89;
+    color: #fff;
+    border: none;
+    transform: scale(1);
+    transition: all 0.1s ease-out;
+}
+.third:hover {
+    transform: scale(1.1);
+}

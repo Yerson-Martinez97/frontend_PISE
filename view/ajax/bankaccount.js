@@ -97,14 +97,14 @@ $(document).ready(function () {
     //------------------------------------------------------
     //-----------------BUSCAR CONTACTOS--------------------
     //------------------------------------------------------
-    // mostrarContactos();
+    mostrarContactos();
     $("#buscar-contacto").on("input", function () {
         var term = $(this).val();
         if (term) {
             filtrarContactos(term);
         }
         if (filtrarContactos(term)) {
-            select.empty();
+            // select.empty();
         }
     });
 

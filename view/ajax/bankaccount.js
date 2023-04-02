@@ -97,7 +97,9 @@ $(document).ready(function () {
     //------------------------------------------------------
     //-----------------BUSCAR CONTACTOS--------------------
     //------------------------------------------------------
-    // mostrarContactos();
+    mostrarContactos();
+    // $("#buscar-contacto").empty();
+
     $("#buscar-contacto").on("input", function () {
         var term = $(this).val();
         if (term) {

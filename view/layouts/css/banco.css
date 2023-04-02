@@ -26,13 +26,11 @@
 
 #data-table {
     font-size: 20px;
-    color: #fff;
-    background-color: #005b89;
-    border: 2px solid #000;
+    color: #000;
 }
 #data-table th {
     width: auto !important;
-    color: #fff;
+    color: #000;
 }
 #data-table td {
     font-size: 16px;

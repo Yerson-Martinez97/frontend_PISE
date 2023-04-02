@@ -21,12 +21,6 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
             <div class="col-md-12  mb-4"></div>
             <div class="col-md-8 col-lg-8">
                 <table class="table-responsive w-100" id="data-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Accion</th>
-                        </tr>
-                    </thead>
                     <tbody></tbody>
                 </table>
             </div>

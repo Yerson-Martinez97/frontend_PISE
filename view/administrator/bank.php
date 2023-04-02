@@ -1,6 +1,6 @@
 <?php
 require_once("view/layouts/header.php");
-if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
+if (isset($_SESSION['datos']) && isset($_SESSION['datos']['id_tipo_usuario'])) {
     require_once("view/layouts/navadministrator.php");
 ?>
     <div class="pagetitle">
@@ -63,8 +63,6 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
         </div>
 
         <script src="view/ajax/bank.js"></script>

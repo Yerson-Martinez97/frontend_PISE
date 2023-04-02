@@ -13,7 +13,14 @@ class Cuenta
     {
         $usr = $_GET['usr'];
         $pwd = $_GET['pwd'];
-        $stmt = $this->conexion->prepare("SELECT * FROM Usuario where login = :usr AND password = :pwd");
+        $stmt = $this->conexion->prepare("SELECT 
+        USU.id_tipo_usuario as id_tipo_usuario,
+        CO.nombre as nombre,
+        TU.nombre as tipo_usuario
+        FROM usuario USU 
+        inner join contacto CO ON USU.id = CO.id 
+        inner join tipo_usuario TU ON TU.id = USU.id_tipo_usuario 
+        where USU.login = :usr AND USU.password = :pwd");
         $stmt->bindParam(':usr', $usr);
         $stmt->bindParam(':pwd', $pwd);
         $stmt->execute();

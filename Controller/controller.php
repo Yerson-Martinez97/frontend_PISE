@@ -12,14 +12,13 @@ class Controller
     static function verifyAccount()
     {
         $cuenta = new Cuenta();
-        $nombre = $cuenta->verifyCuenta();
-        if ($nombre) {
-            if ($nombre['id_tipo_usuario'] == 3) {
+        $datos = $cuenta->verifyCuenta();
+        if ($datos) {
+            if ($datos['id_tipo_usuario'] == 3) {
                 echo "Cajero";
-            } else if ($nombre['id_tipo_usuario'] == 4) {
+            } else if ($datos['id_tipo_usuario'] == 4) {
                 session_start();
-                $_SESSION['login'] = $nombre['login'];
-                $_SESSION['id_tipo_usuario'] = $nombre['id_tipo_usuario'];
+                $_SESSION['datos'] = $datos;
                 header("Location: " . urlsite . "index.php?page=a_bank");
             } else {
                 echo "error";

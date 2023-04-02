@@ -45,6 +45,10 @@ class Controller
     {
         include_once 'view/administrator/fixedasset.php';
     }
+    static function contactUser()
+    {
+        include_once 'view/administrator/contact_user.php';
+    }
     static function logout()
     {
         session_start();

@@ -5,9 +5,12 @@
             <br>
             <a class="navizqboton p-3" href="index.php?page=a_bank">Banco</a>
             <a class="navizqboton p-3" href="index.php?page=a_accountbank">Cuenta Banco</a>
+            <a class="navizqboton p-3" href="index.php?page=contact_user">Movimientos Banco</a>
             <a class="navizqboton p-3" href="index.php?page=a_branchoffice">Sucursal</a>
             <a class="navizqboton p-3" href="index.php?page=a_fixedasset">Activo Fijo</a>
-            <a class="navizqboton p-3" href="index.php?page=a_fixedasset">Contacto/Usuario</a>
+            <a class="navizqboton p-3" href="index.php?page=contact_user">Contacto/Usuario</a>
+            <a class="navizqboton p-3" href="index.php?page=contact_user">Caja</a>
+            <a class="navizqboton p-3" href="index.php?page=contact_user">Movimientos Caja</a>
         </div>
     </div>
     <!-- Page content wrapper-->

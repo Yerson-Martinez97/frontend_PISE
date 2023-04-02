@@ -6,48 +6,99 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
     <div class="">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="hit-the-floor">Activo Fijo</div>
+                <div class="hit-the-floor">Contacto/Usuario</div>
             </div>
 
             <div class="col-md-8">
                 <!-- FORMULARIO -->
                 <form id="agregar-form">
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Activo Fijo</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" autocomplete="off" />
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" />
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <label for="ape_pat" class="form-label">Apellido Paterno</label>
+                            <div class="input-group mb-3">
+                                <input type="text" id="ape_pat" name="ape_pat" class="form-control" placeholder="Apellido Paterno" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <label for="ape_mat" class="form-label">Apellido Materno</label>
+                            <div class="input-group mb-3">
+                                <input type="text" id="ape_mat" name="ape_mat" class="form-control" autocomplete="off">
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="fecha_adquisicion" class="form-label">Fecha Adquisicion</label>
-                        <input type="date" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="costo_adquisicion" class="form-label">Costo Adquisicion</label>
-                        <input type="number" class="form-control" id="costo_adquisicion" name="costo_adquisicion" pattern="[0-9]+(\.[0-9]+)?" />
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="telefono" name="telefono" pattern="[0-9]+(\.[0-9]+)?" autocomplete="off" />
                     </div>
 
                     <div class="mb-3">
-                        <label for="porcentaje_vida_util" class="form-label">% Vida Util</label>
-                        <input type="number" class="form-control" id="porcentaje_vida_util" name="porcentaje_vida_util" pattern="[0-9]+(\.[0-9]+)?" />
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="direccion" name="direccion" autocomplete="off" />
                     </div>
                     <div class="mb-3">
-                        <label for="codigo" class="form-label">Código</label>
-                        <input type="text" class="form-control" id="codigo" name="codigo" />
+                        <label for="ci" class="form-label">Carnet Identidad</label>
+                        <input type="text" class="form-control" id="ci" name="ci" pattern="[0-9]+(\.[0-9]+)?" autocomplete="off" />
                     </div>
                     <div class="mb-3">
-                        <label for="sucursal-select" class="form-label">Sucursal</label>
-                        <select class="form-select form-select-lg mb-3" id="sucursal-select" name="sucursal-select"></select>
+                        <label for="nit" class="form-label">NIT</label>
+                        <input type="text" class="form-control" id="nit" name="nit" pattern="[0-9]+(\.[0-9]+)?" autocomplete="off" />
                     </div>
                     <div class="mb-3">
-                        <label for="tipo_activo_fijos-select" class="form-label">Tipo Activo</label>
-                        <select class="form-select form-select-lg mb-3" id="tipo_activo_fijos-select" name="tipo_activo_fijos-select"></select>
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" autocomplete="off" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Género</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="genero" id="genero_masculino" value="M">
+                            <label class="form-check-label" for="genero_masculino">Masculino</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="genero" id="genero_femenino" value="F">
+                            <label class="form-check-label" for="genero_femenino">Femenino</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <label for="login" class="form-label">Login</label>
+                            <div class="input-group mb-3">
+                                <input type="text" id="login" name="login" class="form-control" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group mb-3">
+                                <input type="text" id="password" name="password" class="form-control" autocomplete="off">
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-success">Agregar</button>
                 </form>
             </div>
             <div class="col-md-8 mb-4"></div>
-            <!-- TABLA ACTIVO FIJO -->
-            <div class="col-md-10 table-responsive">
-                <table id="data-table" class="table text-center ">
+            <!-- MOSTRAR TABLA -->
+            <div class="col-md-8">
+                <table class="table-responsive w-100" id="data-table">
+                    <!-- <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Login</th>
+                            <th>Password</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>CI</th>
+                            <th>NIT</th>
+                            <th>Email</th>
+                            <th>Género</th>
+                        </tr>
+                    </thead> -->
                     <tbody></tbody>
                 </table>
             </div>
@@ -83,7 +134,6 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
                         </div>
                         <div class="mb-3">
                             <label class="bg-white p-2 border border border-secondary rounded-2 w-100" style="color: #aaa" for="actualizar-fec_ape" id="actualizar-fec_ape"></label>
-
                             <input type="hidden" class="form-control" id="actualizar-fecha_apertura" name="actualizar-fecha_apertura" pattern="[0-9]+([0-9]+)?" />
                         </div>
                         <div class="mb-3">
@@ -112,7 +162,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
     </div>
     </body>
 
-    <script src="view/ajax/fixedasset.js"></script>
+    <script src="view/ajax/contact_user.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <?php
 } else {

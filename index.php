@@ -31,6 +31,10 @@ if (isset($_GET['page'])) {
             require "Controller/controller.php";
             Controller::a_fixedasset();
             break;
+        case 'contact_user':
+            require "Controller/controller.php";
+            Controller::contactUser();
+            break;
         case 'logout':
             require "Controller/controller.php";
             Controller::logout();

@@ -1,11 +1,10 @@
 $(document).ready(function () {
     var identity = $(this).val();
     mostrarBancos();
+    mostrarCuentaBanco();
     //------------------------------------------------------
-    //-----------------METODOS------------------------------
-    //------------------------------------------------------
-
     //-----------------MOSTRAR BANCOS-----------------------
+    //------------------------------------------------------
     function mostrarBancos() {
         $.ajax({
             url: "http://localhost:3000/api/v1/bancos/",
@@ -22,12 +21,9 @@ $(document).ready(function () {
             },
         });
     }
-    $("#banco-select").change(function () {
-        identity = $(this).val();
-        $("#data-table").DataTable().destroy();
-        mostrarCuentaBanco();
-    });
+    //------------------------------------------------------
     //-----------------MOSTRAR CONTACTOS--------------------
+    //------------------------------------------------------
     function mostrarContactos() {
         $.ajax({
             url: "http://localhost:3000/api/v1/contactos/",
@@ -51,11 +47,35 @@ $(document).ready(function () {
             },
         });
     }
+
+    $("#saldo").on("keydown", function (e) {
+        if (e.which == 38) {
+            // Flecha hacia arriba
+            e.preventDefault(); // Evitar que se mueva el cursor
+            actualizarValor(100);
+        } else if (e.which == 40) {
+            // Flecha hacia abajo
+            e.preventDefault(); // Evitar que se mueva el cursor
+            actualizarValor(-100);
+        }
+    });
+
+    function actualizarValor(valor) {
+        var input = $("#saldo");
+        var monto = parseInt(input.val() || 0);
+        input.val(monto + valor);
+    }
+    //------------------------------------------------------
+    //-----------------FILTRAR CONTACTOS--------------------
+    //------------------------------------------------------
     function filtrarContactos(term) {
         term = term.toLowerCase();
         var data = JSON.parse(localStorage.getItem("contactos"));
         var select = $("#contacto-select");
         select.empty();
+        if (term === "") {
+            return; // No mostrar nada si el término está vacío
+        }
         var filtrados = data.filter(function (item) {
             return (
                 (item.ci && item.ci.toLowerCase().startsWith(term)) ||
@@ -74,11 +94,20 @@ $(document).ready(function () {
         }
         localStorage.setItem("contactos", JSON.stringify(data));
     }
-    mostrarContactos();
+    //------------------------------------------------------
+    //-----------------BUSCAR CONTACTOS--------------------
+    //------------------------------------------------------
+    // mostrarContactos();
     $("#buscar-contacto").on("input", function () {
         var term = $(this).val();
-        filtrarContactos(term);
+        if (term) {
+            filtrarContactos(term);
+        }
+        if (filtrarContactos(term)) {
+            select.empty();
+        }
     });
+
     //------------------------------------------------------
     //-----------------AGREGAR UNA CUENTA DE BANCO----------
     //------------------------------------------------------
@@ -90,24 +119,26 @@ $(document).ready(function () {
         var tipo_moneda = $("#tipo_moneda-select").val();
         var saldo = $("#saldo").val();
         var fecha_ape = $("#fecha_apertura").val();
-        var fecha_apertura = moment(fecha_ape).format("DD/MM/YYYY");
+        var fecha_apertura = moment(fecha_ape).format("DD-MM-YYYY");
+        // fecha_apertura = fecha.format("YYYY-MM-DD");
+
         var estado = "A";
         var id_contacto = $("#contacto-select").val();
-        alert(
-            id_banco +
-                " " +
-                numero_cuenta +
-                " " +
-                tipo_moneda +
-                " " +
-                saldo +
-                " " +
-                fecha_apertura +
-                " " +
-                estado +
-                " " +
-                id_contacto
-        );
+        // alert(
+        //     id_banco +
+        //         " " +
+        //         numero_cuenta +
+        //         " " +
+        //         tipo_moneda +
+        //         " " +
+        //         saldo +
+        //         " " +
+        //         fecha_apertura +
+        //         " " +
+        //         estado +
+        //         " " +
+        //         id_contacto
+        // );
 
         // Crear objeto con datos a enviar
         var dataToSend = {
@@ -132,6 +163,12 @@ $(document).ready(function () {
                 // Actualizar tabla después de agregar nueva sucursal
                 $("#data-table").DataTable().destroy();
                 mostrarCuentaBanco();
+                $("#numero_cuenta").val("");
+                $("#fecha_apertura").val("");
+                $("#saldo").val("");
+                $("#buscar-contacto").val("");
+                mostrarBancos();
+                mostrarContactos();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error(textStatus + " - " + errorThrown);
@@ -148,12 +185,21 @@ $(document).ready(function () {
         var estado = $("#actualizar-estado").val();
         var fecha = moment();
         var fecha_cierre = fecha.format("YYYY-MM-DD");
-        var dataToSend = {
-            cuenta_banco: {
-                estado: estado,
-                fecha_cierre: fecha_cierre,
-            },
-        };
+        if (estado == "I") {
+            var dataToSend = {
+                cuenta_banco: {
+                    estado: estado,
+                    fecha_cierre: fecha_cierre,
+                },
+            };
+        } else {
+            var dataToSend = {
+                cuenta_banco: {
+                    estado: estado,
+                    fecha_cierre: null,
+                },
+            };
+        }
         var jsonData = JSON.stringify(dataToSend);
         $.ajax({
             url: "http://localhost:3000/api/v1/cuenta_bancos/" + id,
@@ -175,7 +221,7 @@ $(document).ready(function () {
     function llenarSelectEstado(id_banco, estado_actual) {
         // Obtener lista de bancos desde el servidor
         $.ajax({
-            url: "http://localhost:3000/api/v1/bancos/" + id_banco + "/cuenta_bancos",
+            url: "http://localhost:3000/api/v1/cuenta_bancos/index_all",
             dataType: "json",
             success: function (data) {
                 $("#actualizar-estado").empty(); // Vaciar el select actual
@@ -199,7 +245,7 @@ $(document).ready(function () {
     //------------------------------------------------------
     function mostrarCuentaBanco() {
         $.ajax({
-            url: "http://localhost:3000/api/v1/bancos/" + identity + "/cuenta_bancos",
+            url: "http://localhost:3000/api/v1/cuenta_bancos/index_all",
             type: "GET",
             dataType: "json",
             success: function (data) {
@@ -207,12 +253,18 @@ $(document).ready(function () {
                 $("#data-table").DataTable({
                     data: data,
                     columns: [
-                        { title: "Cuenta", data: "numero_cuenta" },
-                        { title: "Tipo Moneda", data: "tipo_moneda" },
+                        { title: "Cuenta", data: "numero_cuenta", orderable: false },
+                        { title: "Moneda", data: "tipo_moneda" },
                         { title: "Saldo", data: "saldo" },
                         { title: "Contacto", data: "contacto.nombre" },
                         { title: "Apertura", data: "fecha_apertura" },
-                        { title: "Estado", data: "estado" },
+                        {
+                            title: "Estado",
+                            data: "estado",
+                            render: function (data, type, row) {
+                                return data === "A" ? "Activo" : "Inactivo";
+                            },
+                        },
                         { title: "Cierre", data: "fecha_cierre" },
                         { title: "Banco", data: "banco.nombre" },
                         {
@@ -241,7 +293,7 @@ $(document).ready(function () {
                                         row.id_banco +
                                         "'><i class='fa-solid fa-circle-arrow-down fa-lg' style='color: #ea5455;'></i></button>"
                                     );
-                                } else {
+                                } else if (row.estado == "I") {
                                     return (
                                         "<button class='border-0 btn-actualizar bg-transparent' data-id='" +
                                         row.id +
@@ -263,6 +315,7 @@ $(document).ready(function () {
                                     );
                                 }
                             },
+                            orderable: false,
                         },
                     ],
                     paging: true,
@@ -294,35 +347,22 @@ $(document).ready(function () {
                     },
                 });
 
-                // Agregar evento para el botón de actualización
+                //Agregar evento para el botón de actualización
                 $("#data-table").on("click", ".btn-actualizar", function () {
                     var id = $(this).data("id");
-                    //var numero_cuenta = $(this).data("numero_cuenta");
-                    //var nombre = $(this).data("tipo_moneda");
-                    // var saldo = $(this).data("saldo");
                     var id_contacto = $(this).data("id_contacto");
-                    // var fecha_apertura = $(this).data("fecha_apertura");
                     var estado = $(this).data("estado");
-                    // var fecha_cierre = $(this).data("fecha_cierre");
-                    // // var id_banco = $(this).data("id_banco");
-                    // var id_banco = $(this).data("id_banco");
 
                     // Prellenar campos del formulario con los valores de la sucursal
                     $("#actualizar-id").val(id);
-                    //$("#actualizar-numero_cuenta").val(numero_cuenta);
-                    //$("#actualizar-tipo_moneda").val(nombre);
-                    // $("#actualizar-saldo").val(saldo);
                     $("#actualizar-id_contacto").val(id_contacto);
-                    // $("#actualizar-fecha_apertura").val(fecha_apertura);
                     $("#actualizar-estado").val(estado);
-                    // $("#actualizar-fecha_cierre").val(fecha_cierre);
-                    // $("#actualizar-id_banco").val(id_banco);
-                    // llenarSelectBancos(id_banco);
                     llenarSelectEstado(id, estado);
                     // Mostrar modal de actualización
-                    if (estado == "A") {
-                        $("#modal-actualizar").modal("show");
-                    }
+                    // if (estado == "A") {
+                    //     $("#modal-actualizar").modal("show");
+                    // }
+                    $("#modal-actualizar").modal("show");
                 });
             },
             error: function (jqXHR, textStatus, errorThrown) {

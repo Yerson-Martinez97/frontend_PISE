@@ -1,80 +1,102 @@
 $(document).ready(function () {
-    MostrarBancos();
+    actualizarTabla();
 
     // setInterval(actualizarTabla, 5000);
-    //------------------------------------------------------
-    //-----------------AGREGAR BANCO------------------------
-    //------------------------------------------------------
+
     $("#agregar-form").on("submit", function (event) {
         event.preventDefault();
         var nombre = $("#nombre").val();
-        alert(nombre);
+        var ape_pat = $("#ape_pat").val();
+        var ape_mat = $("#ape_mat").val();
+        var telefono = $("#telefono").val();
+        var direccion = $("#direccion").val();
+        var ci = $("#ci").val();
+        var nit = $("#nit").val();
+        var email = $("#email").val();
+        var login = $("#login").val();
+        var password = $("#password").val();
         // Crear objeto con datos a enviar
         var dataToSend = {
-            banco: {
+            sucursal: {
                 nombre: nombre,
+                direccion: direccion,
             },
         };
-        var jsonData = JSON.stringify(dataToSend); // Convertir objeto a JSON
+        // Convertir objeto a JSON
+        var jsonData = JSON.stringify(dataToSend);
+
         // Enviar datos a través de AJAX
         $.ajax({
-            url: "http://localhost:3000/api/v1/bancos",
+            url: "http://localhost:3000/api/v1/sucursales/",
             type: "POST",
             contentType: "application/json",
             data: jsonData,
             success: function (response) {
                 // Actualizar tabla después de agregar nueva sucursal
                 $("#data-table").DataTable().destroy();
-                MostrarBancos();
+                actualizarTabla();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error(textStatus + " - " + errorThrown);
             },
         });
     });
-    //------------------------------------------------------
-    //-----------------ACTUALIZAR BANCO---------------------
-    //------------------------------------------------------
+
     $("#actualizar-form").on("submit", function (event) {
         event.preventDefault();
         var id = $("#actualizar-id").val();
         var nombre = $("#actualizar-nombre").val();
+        var direccion = $("#actualizar-direccion").val();
+
+        // Crear objeto con datos a enviar
         var dataToSend = {
-            banco: {
+            sucursal: {
                 nombre: nombre,
+                direccion: direccion,
             },
-        }; // Crear objeto con datos a enviar
-        var jsonData = JSON.stringify(dataToSend); // Convertir objeto a JSON
+        };
+
+        // Convertir objeto a JSON
+        var jsonData = JSON.stringify(dataToSend);
+
+        // Enviar datos a través de AJAX
         $.ajax({
-            url: "http://localhost:3000/api/v1/bancos/" + id,
+            url: "http://localhost:3000/api/v1/sucursales/" + id,
             type: "PUT",
             contentType: "application/json",
             data: jsonData,
             success: function (response) {
-                $("#data-table").DataTable().destroy(); //Destruir la tabla
-                $("#modal-actualizar").modal("hide"); //Ocultar el modal
-                MostrarBancos(); // Mostrar tabla después de actualizar sucursal
+                // Actualizar tabla después de actualizar sucursal
+                $("#data-table").DataTable().destroy();
+                $("#modal-actualizar").modal("hide");
+                actualizarTabla();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error(textStatus + " - " + errorThrown);
             },
         });
-        $("#actualizar-modal").modal("hide"); // Ocultar modal después de actualizar
+
+        // Ocultar modal después de actualizar
+        $("#actualizar-modal").modal("hide");
     });
-    //------------------------------------------------------
-    //-----------------MOSTRAR BANCOS-----------------------
-    //------------------------------------------------------
-    function MostrarBancos() {
+
+    function actualizarTabla() {
         $.ajax({
-            url: "http://localhost:3000/api/v1/bancos",
+            url: "http://localhost:3000/api/v1/usuarios",
             type: "GET",
             dataType: "json",
             success: function (data) {
-                // Inicializar la tabla con DataTables
+                // Inicializar la tabla con DataTablesF
                 $("#data-table").DataTable({
                     data: data,
                     columns: [
-                        { title: "Nombre", data: "nombre" },
+                        { title: "Nombre", data: "contacto.nombre" },
+                        { title: "Apellido Paterno", data: "contacto.apellido_paterno" },
+                        { title: "Apellido Materno", data: "contacto.apellido_materno" },
+                        { title: "Login", data: "login" },
+                        { title: "Password", data: "password" },
+                        { title: "Estado", data: "estado" },
+                        { title: "Tipo Usuario", data: "id_tipo_usuario" },
                         {
                             title: "Accion",
                             data: null,
@@ -84,14 +106,16 @@ $(document).ready(function () {
                                     row.id +
                                     "' data-nombre='" +
                                     row.nombre +
+                                    "' data-direccion='" +
+                                    row.direccion +
                                     "'><i class='fa-regular fa-pen-to-square' style='color: #000;'></i></button>"
                                 );
                             },
                         },
                     ],
                     paging: true,
-                    pageLength: 10,
-                    lengthMenu: [5, 10, 30, 50],
+                    pageLength: 5,
+                    lengthMenu: [2, 5, 10, 20],
                     pagingType: "simple_numbers",
                     language: {
                         lengthMenu: "Mostrar _MENU_ registros por página",
@@ -107,14 +131,20 @@ $(document).ready(function () {
                         },
                     },
                 });
+
                 // Agregar evento para el botón de actualización
                 $("#data-table").on("click", ".btn-actualizar", function () {
                     var id = $(this).data("id");
                     var nombre = $(this).data("nombre");
+                    var direccion = $(this).data("direccion");
+
                     // Prellenar campos del formulario con los valores de la sucursal
                     $("#actualizar-id").val(id);
                     $("#actualizar-nombre").val(nombre);
-                    $("#modal-actualizar").modal("show"); // Mostrar modal de actualización
+                    $("#actualizar-direccion").val(direccion);
+
+                    // Mostrar modal de actualización
+                    $("#modal-actualizar").modal("show");
                 });
             },
             error: function (jqXHR, textStatus, errorThrown) {

@@ -2,7 +2,10 @@ $(document).ready(function () {
     var identity = $(this).val();
     mostrarSucursal();
     mostrarTipoActivoFijo();
-    //NOMBRE BANCO
+    mostrarActivoFijo();
+    //------------------------------------------------------
+    //-----------------MOSTRAR SUCURSAL---------------------
+    //------------------------------------------------------
     function mostrarSucursal() {
         $.ajax({
             url: "http://localhost:3000/api/v1/sucursales/",
@@ -23,12 +26,9 @@ $(document).ready(function () {
             },
         });
     }
-    $("#sucursal-select").change(function () {
-        identity = $(this).val();
-        // Aquí puedes hacer lo que necesites con el valor seleccionado
-        $("#data-table").DataTable().destroy();
-        mostrarActivoFijo();
-    });
+    //------------------------------------------------------
+    //-----------------MOSTRAR TIPO ACTIVO FIJO-------------
+    //------------------------------------------------------
     function mostrarTipoActivoFijo() {
         $.ajax({
             url: "http://localhost:3000/api/v1/tipo_activo_fijos",
@@ -44,27 +44,44 @@ $(document).ready(function () {
             },
         });
     }
+    //------------------------------------------------------
+    //-----------------AGREGAR ACTIVO-----------------------
+    //------------------------------------------------------
     $("#agregar-form").on("submit", function (event) {
         event.preventDefault();
         // var id_banco = $("#sucursal-select").val();
         var nombre = $("#nombre").val();
-        var fecha_adq = $("#fecha_adquisicion").val();
-        //
-        var fecha_adquisicion;
-        if (fecha_adq != "") {
-            fecha_adquisicion = moment(fecha_adq).format("DD/MM/YYYY");
-        } else {
-            fecha_adquisicion = "";
-        }
-        //
+        var fecha_adquisicion = $("#fecha_adquisicion").val();
         var costo_adquisicion = $("#costo_adquisicion").val();
         var porcentaje_vida_util = $("#porcentaje_vida_util").val();
-        var fecha_baja = "null";
         var codigo = $("#codigo").val();
         var id_sucursal = $("#sucursal-select").val();
         var id_tipo_activo_fijo = $("#tipo_activo_fijos-select").val();
 
-        // Crear objeto con datos a enviar
+        alert(
+            nombre +
+                " " +
+                fecha_adquisicion +
+                " " +
+                costo_adquisicion +
+                " " +
+                porcentaje_vida_util +
+                " " +
+                codigo +
+                " " +
+                id_sucursal +
+                " " +
+                id_tipo_activo_fijo
+        );
+
+        // if (fecha_adq != "") {
+        //     fecha_adquisicion = moment(fecha_adq).format("DD/MM/YYYY");
+        // } else {
+        //     fecha_adquisicion = "";
+        // }
+        //
+
+        // // Crear objeto con datos a enviar
         var dataToSend = {
             activo_fijo: {
                 nombre: nombre,
@@ -72,6 +89,7 @@ $(document).ready(function () {
                 costo_adquisicion: costo_adquisicion,
                 porcentaje_vida_util: porcentaje_vida_util,
                 codigo: codigo,
+                id_sucursal: id_sucursal,
                 id_tipo_activo_fijo: id_tipo_activo_fijo,
             },
         };
@@ -88,71 +106,79 @@ $(document).ready(function () {
                 // Actualizar tabla después de agregar nueva sucursal
                 $("#data-table").DataTable().destroy();
                 mostrarActivoFijo();
-                $("#nombre").val("");
-                $("#fecha_adquisicion").val("");
-                $("#costo_adquisicion").val();
-                $("#porcentaje_vida_util").val();
-                fecha_baja = "null";
-                $("#codigo").val();
-                $("#sucursal-select").val();
-                $("#tipo_activo_fijos-select").val();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error(textStatus + " - " + errorThrown);
             },
         });
     });
-
+    //------------------------------------------------------
+    //-----------------MOSTRAR ACTIVO FIJO------------------
+    //------------------------------------------------------
     function mostrarActivoFijo() {
         $.ajax({
-            url: "http://localhost:3000/api/v1/sucursales/" + identity + "/activo_fijos",
-            type: "GET",
+            url: "http://localhost:3000/api/v1/activo_fijos/index_all",
             dataType: "json",
             success: function (data) {
-                // Inicializar la tabla con DataTablesF
                 $("#data-table").DataTable({
+                    // responsive: true,
                     data: data,
                     columns: [
-                        { title: "ID", data: "id" },
-                        { title: "Nombre", data: "nombre" },
-                        { title: "Fecha Adquisicion", data: "fecha_adquisicion" },
-                        { title: "Costo Adquisicion", data: "costo_adquisicion" },
-                        { title: "% Vida Util", data: "porcentaje_vida_util" },
-                        { title: "Fecha Baja", data: "fecha_baja" },
-                        { title: "Código", data: "codigo" },
-                        { title: "Sucursal", data: "sucursal.nombre" },
-                        { title: "Tipo Activo Fijo", data: "tipo_activo_fijo.nombre" },
+                        { title: "Nombre", data: "nombre", orderable: false, width: "10%" },
+                        { title: "Fecha Adquisición", data: "fecha_adquisicion", width: "10%" },
+                        { title: "Costo Adquisición", data: "costo_adquisicion", width: "10%" },
                         {
-                            title: "Accion",
+                            title: "% Vida Útil",
+                            data: "porcentaje_vida_util",
+                            width: "10%",
+                        },
+                        { title: "Fecha Baja", data: "fecha_baja", width: "10%" },
+                        { title: "Código", data: "codigo", width: "10%" },
+                        { title: "Sucursal", data: "sucursal.nombre", width: "10%" },
+                        { title: "Tipo Activo", data: "tipo_activo_fijo.nombre", width: "10%" },
+                        {
+                            title: "Valor Depreciado",
+                            render: function (data, type, row, meta) {
+                                var depreciatedValue =
+                                    parseFloat(row.costo_adquisicion) *
+                                    (parseFloat(row.porcentaje_vida_util / 12) / 100);
+                                var fecha_adquisicion = moment(row.fecha_adquisicion, "YYYY-MM-DD");
+                                var now = moment();
+                                var months = now.diff(fecha_adquisicion, "month");
+                                // console.log("Diferencia en meses: ", months);
+                                var depreciation =
+                                    row.costo_adquisicion - depreciatedValue * months;
+                                return parseFloat(depreciation).toFixed(2);
+                            },
+                            width: "10%",
+                            orderable: false,
+                        },
+
+                        {
+                            title: "",
+                            orderable: false,
                             data: null,
                             render: function (data, type, row) {
-                                return (
-                                    "<button class='border-0 btn-actualizar' data-id='" +
-                                    row.id +
-                                    "' data-nombre='" +
-                                    row.nombre +
-                                    "' data-fecha_adquisicion='" +
-                                    row.fecha_adquisicion +
-                                    "' data-costo_adquisicion='" +
-                                    row.costo_adquisicion +
-                                    "' data-porcentaje_vida_util='" +
-                                    row.porcentaje_vida_util +
-                                    "' data-fecha_baja='" +
-                                    row.fecha_baja +
-                                    "' data-codigo='" +
-                                    row.codigo +
-                                    "' data-id_sucursal='" +
-                                    row.id_sucursal +
-                                    "' data-id_tipo_activo_fijo='" +
-                                    row.id_tipo_activo_fijo +
-                                    "'><i class='fa-regular fa-pen-to-square' style='color: #000;'></i></button>"
-                                );
+                                if (row.fecha_baja != null) {
+                                    return (
+                                        "<button class='border-0 btn-actualizar bg-transparent' style='font-size:1.5rem;' " +
+                                        "data-id='" +
+                                        row.id +
+                                        "'><i class='fa-regular fa-circle-down fa-lg' style='color: #A41D1A;'></i></button>"
+                                    );
+                                } else {
+                                    return (
+                                        "<button class='border-0 bg-transparent' data-id='" +
+                                        row.id +
+                                        "'><i class='fa-solid fa-ban fa-lg' style='color: #c3c6d1;'></i></button>"
+                                    );
+                                }
                             },
                         },
                     ],
                     paging: true,
                     pageLength: 5,
-                    lengthMenu: [2, 5, 10, 20],
+                    lengthMenu: [5, 10, 20, 50],
                     pagingType: "simple_numbers",
                     language: {
                         lengthMenu: "Mostrar _MENU_ registros por página",
@@ -167,39 +193,52 @@ $(document).ready(function () {
                             previous: "Anterior",
                         },
                     },
+                    function(row, data) {
+                        // Obtener el valor de la columna "Estado"
+                        // Establecer el color de fondo de la fila según el estado
+                        if (row.fecha_baja != null) {
+                            $(row).css("background-color", "#fff");
+                        } else {
+                            $(row).css("background-color", "#CFD2CF");
+                        }
+                    },
                 });
-
-                // Agregar evento para el botón de actualización
                 $("#data-table").on("click", ".btn-actualizar", function () {
-                    var id = $(this).data("id");
-                    var numero_cuenta = $(this).data("numero_cuenta");
-                    var nombre = $(this).data("tipo_moneda");
-                    var saldo = $(this).data("saldo");
-                    var id_contacto = $(this).data("id_contacto");
-                    var fecha_apertura = $(this).data("fecha_apertura");
-                    var estado = $(this).data("estado");
-                    var fecha_cierre = $(this).data("fecha_cierre");
-                    var id_banco = $(this).data("id_banco");
-
-                    // Prellenar campos del formulario con los valores de la sucursal
-                    $("#actualizar-id").val(id);
-                    $("#actualizar-numero_cuenta").val(numero_cuenta);
-                    $("#actualizar-tipo_moneda").val(nombre);
-                    $("#actualizar-saldo").val(saldo);
-                    $("#actualizar-id_contacto").val(id_contacto);
-                    $("#actualizar-fecha_apertura").val(fecha_apertura);
-                    $("#actualizar-fec_ape").text(fecha_apertura);
-                    $("#actualizar-estado").val(estado);
-                    $("#actualizar-fecha_cierre").val(fecha_cierre);
-                    $("#actualizar-fec_cie").text(fecha_cierre + "ok");
-                    $("#actualizar-id_banco").val(id_banco);
-
-                    // Mostrar modal de actualización
-                    $("#modal-actualizar").modal("show");
+                    // var id = $(this).data("id");
+                    // var asi_fecha_hora = $(this).data("fecha_hora");
+                    // $("#asi_actualizar-id").val(id);
+                    // $("#asi_actualizar-asi_fecha_hora").val(asi_fecha_hora);
+                    // $("#modal-asignar").modal("show"); // Mostrar modal de actualización
+                    var resultado = confirm("¿Estás seguro de que quieres continuar?");
+                    if (resultado == true) {
+                        var id_activo_fijo = $(this).data("id");
+                        var fecha = moment();
+                        var fecha_actual = fecha.format("YYYY-MM-DD");
+                        var dataToSend = {
+                            activo_fijo: {
+                                fecha_baja: fecha_actual,
+                            },
+                        };
+                        var jsonData = JSON.stringify(dataToSend);
+                        // console.log(fechaString);
+                        $.ajax({
+                            url: "http://localhost:3000/api/v1/activo_fijos/" + id_activo_fijo,
+                            type: "PUT",
+                            contentType: "application/json",
+                            data: jsonData,
+                            success: function (response) {
+                                $("#data-table").DataTable().destroy(); //Destruir la tabla
+                                mostrarActivoFijo(); // Mostrar tabla después de actualizar sucursal
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.error(textStatus + " - " + errorThrown);
+                            },
+                        });
+                    }
                 });
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.error(textStatus + " - " + errorThrown);
+                alert("Error al cargar los datos de la tabla: " + textStatus);
             },
         });
     }

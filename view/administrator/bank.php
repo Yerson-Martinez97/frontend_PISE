@@ -49,7 +49,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
                         </div>
                         <input type="hidden" id="actualizar-id" name="id" />
                     </form>
-                </div>
+                </div>  
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Cancelar
@@ -63,7 +63,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
     </div>
     </div>
     </div>
-    <script src="view/ajax/banco.js"></script>
+    <script src="view/ajax/bank.js"></script>
 
 <?php
 } else {

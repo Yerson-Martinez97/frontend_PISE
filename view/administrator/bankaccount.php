@@ -15,14 +15,13 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
                     </div>
                     <div class="mb-3">
                         <label for="numero_cuenta" class="form-label">Numero Cuenta</label>
-                        <input type="text" class="form-control" id="numero_cuenta" name="numero_cuenta" required autocomplete="off" />
+                        <input type="text" class="form-control" id="numero_cuenta" name="numero_cuenta" pattern="[0-9]+([0-9]+)?" required autocomplete="off" />
                     </div>
 
                     <div class="row">
                         <div class="col-xs-12 col-md-3">
                             <label for="saldo" class="form-label">Saldo</label>
                             <input type="number" class="form-control" id="saldo" name="saldo" pattern="[0-9]+([0-9]+)?" required autocomplete="off" min="1" />
-
                         </div>
                         <div class="col-xs-12 col-md-4">
                             <label for="tipo_moneda-select" class="form-label">Tipo Moneda</label>
@@ -34,27 +33,10 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
                         </div>
 
                     </div>
-
-                    <!-- <div class="mb-3">
-                        <label for="tipo_moneda-select" class="form-label">Tipo Moneda</label>
-                        <select class="form-select form-select-lg mb-3" id="tipo_moneda-select" name="tipo_moneda-select" required>
-                            <option value="BOB">BOB</option>
-                            <option value="USD">USD</option>
-                            <option value="EUR">EUR</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="saldo" class="form-label">Saldo</label>
-                        <input type="number" class="form-control" id="saldo" name="saldo" pattern="[0-9]+([0-9]+)?" required autocomplete="off" />
-                    </div> -->
                     <div class="mb-3">
                         <label for="fecha_apertura" class="form-label">Fecha Apertura</label>
                         <input type="date" class="form-control" id="fecha_apertura" name="fecha_apertura" required />
                     </div>
-                    <!-- <div class="mb-3">
-                        <label for="contacto-select" class="form-label">Contacto</label>
-                        <input type="text" class="form-control" id="contacto-select" name="contacto-select" required />
-                    </div> -->
                     <div class="row">
                         <div class="col-xs-12 col-md-4">
                             <div class="input-group mb-3">
@@ -66,7 +48,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
                         </div>
                         <div class="col-xs-12 col-md-3">
                             <div class="mb-3">
-                                <select id="contacto-select" class="form-control"></select>
+                                <select id="contacto-select" class="form-control" required></select>
                             </div>
                         </div>
                     </div>
@@ -76,7 +58,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
             </div>
             <div class="col-md-8 mb-4 mt-4"></div>
             <div class="col-md-8">
-                <table class="table-responsive w-100"  id="data-table">
+                <table class="table-responsive w-100" id="data-table">
                     <thead>
                         <tr>
                             <th>Cuenta</th>
@@ -107,41 +89,13 @@ if (isset($_SESSION['login']) && isset($_SESSION['id_tipo_usuario'])) {
                 </div>
                 <div class="modal-body">
                     <form id="actualizar-form">
-                        <!-- <div class="mb-3">
-                            <label for="actualizar-id_banco" class="form-label">Banco</label>
-                            <select class="form-control" id="actualizar-id_banco" name="actualizar-id_banco"></select>
-                        </div> -->
-                        <!-- <div class="mb-3">
-                            <label for="actualizar-numero_cuenta" class="form-label">Numero Cuenta</label>
-                            <input type="text" class="form-control" id="actualizar-numero_cuenta" name="actualizar-numero_cuenta" autocomplete="off" />
-                        </div> -->
-                        <!-- <div class="mb-3">
-                            <label for="actualizar-tipo_moneda" class="form-label">Tipo Moneda</label>
-                            <input type="text" class="form-control" id="actualizar-tipo_moneda" name="actualizar-tipo_moneda" />
-                        </div> -->
-                        <!-- <div class="mb-3">
-                            <label for="actualizar-saldo" class="form-label">Saldo</label>
-                            <input type="number" class="form-control" id="actualizar-saldo" name="actualizar-saldo" pattern="[0-9]+([0-9]+)?" />
-                        </div> -->
-                        <!-- <div class="mb-3">
-                            <label for="actualizar-id_contacto" class="form-label">Contacto</label>
-                            <input type="number" class="form-control" id="actualizar-id_contacto" name="actualizar-id_contacto" pattern="[0-9]+([0-9]+)?" />
-                        </div> -->
                         <div class="mb-3">
                             <input type="hidden" class="form-control" id="actualizar-fecha_apertura" name="actualizar-fecha_apertura" pattern="[0-9]+([0-9]+)?" />
                         </div>
-                        <!-- <div class="mb-3">
-                            <label for="actualizar-estado" class="form-label">Estado</label>
-                            <input type="text" class="form-control" id="actualizar-estado" name="actualizar-estado" pattern="[0-9]+([0-9]+)?" />
-                        </div> -->
                         <div class="mb-3">
                             <label for="actualizar-estado" class="form-label">Estado</label>
                             <select class="form-control" id="actualizar-estado" name="actualizar-estado"></select>
                         </div>
-                        <!-- <div class="mb-3">
-                            <label for="actualizar-estado" class="form-label">Cierre</label>
-                            <input type="hidden" class="form-control" id="actualizar-fecha_cierre" name="actualizar-fecha_cierre" pattern="[0-9]+([0-9]+)?" />
-                        </div> -->
                         <input type="hidden" id="actualizar-id" name="id" />
                     </form>
                 </div>

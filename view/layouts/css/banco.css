@@ -9,7 +9,7 @@
 
 .hit-the-floor {
     color: #fff;
-    font-size: 4em;
+    /* font-size: 1rem; */
     font-weight: bold;
     font-family: Helvetica;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
@@ -25,7 +25,7 @@
 }
 
 #data-table {
-    font-size: 20px;
+    /* font-size: 20px; */
     color: #000;
 }
 #data-table th {
@@ -33,9 +33,16 @@
     color: #000;
 }
 #data-table td {
-    font-size: 16px;
+    /* font-size: 16px; */
     width: auto !important;
     color: #000;
+}
+#data-table thead{
+    background-color: #293757;
+    color: #fff;
+}
+#data-table thead th{
+    color: #fff;
 }
 /* #data-table tbody tr:nth-child(even) {
     background-color: #e1eef4;

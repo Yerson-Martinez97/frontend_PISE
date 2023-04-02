@@ -121,7 +121,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 $("#data-table").DataTable({
-                    // responsive: true,
+                    responsive: true,
                     data: data,
                     columns: [
                         { title: "Nombre", data: "nombre", orderable: false, width: "10%" },

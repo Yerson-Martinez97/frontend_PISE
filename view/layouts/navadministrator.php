@@ -73,14 +73,14 @@
                 <i class="bi"></i>
                 <span>Registro Banco</span>
             </a>
-        <li class="nav-item">
+        </li>
         <li class="nav-item">
             <a class="nav-link collapsed" href="index.php?page=a_accountbank">
                 <!-- <i class="bi bi-person"></i> -->
                 <i class="bi"></i>
                 <span>Cuentas de Banco</span>
             </a>
-        <li class="nav-item">
+        </li>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Movimiento Bancos</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -105,8 +105,23 @@
             </ul>
         </li><!-- End Components Nav -->
 
+        <li class="nav-heading">Activos Fijos</li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="index.php?page=a_fixedasset">
+                <!-- <i class="bi bi-person"></i> -->
+                <i class="bi"></i>
+                <span>Activo Fijo</span>
+            </a>
+        </li>
 
-
+        <li class="nav-heading">Sucursales</li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="index.php?page=a_branchoffice">
+                <!-- <i class="bi bi-person"></i> -->
+                <i class="bi"></i>
+                <span>Sucursales</span>
+            </a>
+        </li>
         <li class="nav-heading"></li>
 
         <li class="nav-item">
@@ -114,7 +129,7 @@
                 <i class="bi bi-person"></i>
                 <span>Perfil</span>
             </a>
-
+        </li>
         <li class="nav-item">
             <a class="nav-link collapsed" href="index.php?page=logout">
                 <i class="bi bi-box-arrow-in-right"></i>
@@ -127,16 +142,3 @@
 </aside><!-- End Sidebar-->
 
 <main id="main" class="main">
-
-    <div class="pagetitle">
-        <h1>Form Elements</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.php?page=a_bank">Home</a></li>
-                <li class="breadcrumb-item">Forms</li>
-                <li class="breadcrumb-item active">Elements</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">

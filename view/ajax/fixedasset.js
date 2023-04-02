@@ -161,16 +161,16 @@ $(document).ready(function () {
                             render: function (data, type, row) {
                                 if (row.fecha_baja != null) {
                                     return (
+                                        "<button class='border-0 bg-transparent' data-id='" +
+                                        row.id +
+                                        "'><i class='fa-solid fa-ban fa-lg' style='color: #c3c6d1;'></i></button>"
+                                    );
+                                } else {
+                                    return (
                                         "<button class='border-0 btn-actualizar bg-transparent' style='font-size:1.5rem;' " +
                                         "data-id='" +
                                         row.id +
                                         "'><i class='fa-regular fa-circle-down fa-lg' style='color: #A41D1A;'></i></button>"
-                                    );
-                                } else {
-                                    return (
-                                        "<button class='border-0 bg-transparent' data-id='" +
-                                        row.id +
-                                        "'><i class='fa-solid fa-ban fa-lg' style='color: #c3c6d1;'></i></button>"
                                     );
                                 }
                             },
@@ -193,13 +193,15 @@ $(document).ready(function () {
                             previous: "Anterior",
                         },
                     },
-                    function(row, data) {
+                    rowCallback: function (row, data) {
                         // Obtener el valor de la columna "Estado"
+                        var estado = data.estado;
                         // Establecer el color de fondo de la fila según el estado
-                        if (row.fecha_baja != null) {
+                        if (data.fecha_baja == null) {
                             $(row).css("background-color", "#fff");
+
                         } else {
-                            $(row).css("background-color", "#CFD2CF");
+                            $(row).css("background-color", "#ddd");
                         }
                     },
                 });

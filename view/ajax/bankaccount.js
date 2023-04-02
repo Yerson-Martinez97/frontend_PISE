@@ -241,7 +241,7 @@ $(document).ready(function () {
     }
 
     //------------------------------------------------------
-    //-----------------METODO MOSTRA CUENTA BANCO-----------
+    //-----------------MOSTRAR CUENTAS BANCO----------------
     //------------------------------------------------------
     function mostrarCuentaBanco() {
         $.ajax({

@@ -45,7 +45,7 @@ if (isset($_SESSION['datos']) && isset($_SESSION['datos']['id_tipo_usuario'])) {
             </div>
             <div class="col-md-8 mb-4"></div>
             <!-- TABLA CXC y  -->
-            <div class="col-md-8 col-sm-12 table-responsive">
+            <div class="col-md-10 col-sm-12 table-responsive">
                 <table id="data-table" class="table text-center">
                     <tbody></tbody>
                 </table>
@@ -57,51 +57,70 @@ if (isset($_SESSION['datos']) && isset($_SESSION['datos']['id_tipo_usuario'])) {
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Ingrese el monto</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Ingresar Monto</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="actualizar-form">
-                            <div class="mb-3">
-                                <label for="actualizar-monto_pagar" class="form-label">Monto</label>
-                                <input type="number" class="form-control" id="actualizar-monto_pagar" name="actualizar-monto_pagar" pattern="[0-9]+([0-9]+)?" required autocomplete="off" min="1" />
+                        <form id="actualizar-form_cxc">
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Monto</span>
+                                </div>
+                                <input type="number" class="form-control" id="actualizar-monto_pagar" name="actualizar-monto_pagar" pattern="[0-9]+([0-9]+)?" />
                             </div>
-                            <input type="hidden" id="actualizar-id" name="actualizar-id" />
+
+
+                            <div class="mb-3">
+                                <label for="actualizar-monto_pagar" class="form-label">Descripción</label>
+                                <textarea name="actualizar-descripcion" id="actualizar-descripcion" class="form-control" id="" cols="30" rows="10"></textarea>
+                            </div>
+                            <input type="text" id="actualizar-id" name="actualizar-id" />
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Cancelar
                         </button>
-                        <button type="submit" form="actualizar-form" class="btn btn-primary">
+                        <button type="submit" form="actualizar-form_cxc" class="btn btn-primary">
                             Guardar cambios
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- MODAL CUOTAS -->
-        <div class="modal fade" id="modal-actualizar_cuotas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <!-- MODAL CUOTA -->
+        <div class="modal fade" id="modal-actualizar_cuota" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Ingrese el monto</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Ingresar Pago de Cuota</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="actualizar-form">
-                            <div class="mb-3">
-                                <label for="actualizar-monto_pagar" class="form-label">Monto</label>
-                                <input type="number" class="form-control" id="actualizar-monto_pagar" name="actualizar-monto_pagar" pattern="[0-9]+([0-9]+)?" required autocomplete="off" min="1" />
+                        <form id="actualizar-form_cuota">
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Monto</span>
+                                </div>
+                                <input type="number" class="form-control" id="actualizar-monto_pagar" name="actualizar-monto_pagar" pattern="[0-9]+([0-9]+)?" />
                             </div>
-                            <input type="hidden" id="actualizar-id" name="actualizar-id" />
+
+
+                            <div class="mb-3">
+                                <label for="actualizar-monto_pagar" class="form-label">Descripción</label>
+                                <textarea name="actualizar-descripcion" id="actualizar-descripcion" class="form-control" id="" cols="30" rows="10"></textarea>
+                            </div>
+                            <input type="text" id="actualizar-id" name="actualizar-id" />
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Cancelar
                         </button>
-                        <button type="submit" form="actualizar-form" class="btn btn-primary">
+                        <button type="submit" form="actualizar-form_cuota" class="btn btn-primary">
                             Guardar cambios
                         </button>
                     </div>

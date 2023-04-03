@@ -138,13 +138,13 @@ $(document).ready(function () {
                         }
                     },
                 });
-                // $("#data-table").on("click", ".btn-actualizar", function () {
-                //     var id = $(this).data("id");
-                //     var nombre = $(this).data("nombre");
-                //     // Prellenar campos del formulario con los valores de la sucursal
-                //     $("#actualizar-id").val(id);
-                //     $("#modal-actualizar_cxc").modal("show"); // Mostrar modal de actualización
-                // });
+                $("#data-table").on("click", ".btn-actualizar", function () {
+                    var id = $(this).data("id");
+                    // Prellenar campos del formulario con los valores de la sucursal
+                    $("#actualizar-id").val(id);
+                    $("#modal-actualizar_cuota").modal("hide"); // Mostrar modal de actualización
+                    $("#modal-actualizar_cxc").modal("show"); // Mostrar modal de actualización
+                });
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Error al cargar los datos de la tabla: " + textStatus);
@@ -208,7 +208,7 @@ $(document).ready(function () {
                             render: function (data, type, row) {
                                 if (row.estado == "P") {
                                     return (
-                                        "<button class='border-0 btn-actualizar bg-transparent' data-id='" +
+                                        "<button class='border-0 btn-actualizar_cuota bg-transparent' data-id='" +
                                         row.id +
                                         "'><i class='fa-solid fa-hand-holding-dollar fa-2xl' style='color: #1f5135;'></i></button>"
                                     );
@@ -251,17 +251,89 @@ $(document).ready(function () {
                         }
                     },
                 });
-                // $("#data-table").on("click", ".btn-actualizar", function () {
-                //     var id = $(this).data("id");
-                //     var nombre = $(this).data("nombre");
-                //     // Prellenar campos del formulario con los valores de la sucursal
-                //     $("#actualizar-id").val(id);
-                //     $("#modal-actualizar_cxc").modal("show"); // Mostrar modal de actualización
-                // });
+                $("#data-table").on("click", ".btn-actualizar_cuota", function () {
+                    var id = $(this).data("id");
+                    // Prellenar campos del formulario con los valores de la sucursal
+                    $("#actualizar-id").val(id);
+                    $("#modal-actualizar_cxc").modal("hide"); // Mostrar modal de actualización
+                    $("#modal-actualizar_cuota").modal("show"); // Mostrar modal de actualización
+                });
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Error al cargar los datos de la tabla: " + textStatus);
             },
         });
     }
+
+    //------------------------------------------------------
+    //-----------------AGREGAR MONTO A CXC------------------
+    //------------------------------------------------------
+
+    $("#actualizar-form_cxc").on("submit", function (event) {
+        event.preventDefault();
+        var id = $("#actualizar-id").val();
+        var monto_pagar = $("#actualizar-monto_pagar").val();
+        var descripcion = $("#actualizar-descripcion").val();
+        console.log(id + " " + monto_pagar + " " + descripcion);
+        var dataToSend = {
+            movimiento_caja: {
+                descripcion: descripcion,
+                id_concepto_movimiento_caja: 2,
+                monto: monto_pagar,
+                id_caja: 2,
+            },
+        };
+        var jsonData = JSON.stringify(dataToSend);
+        $.ajax({
+            url: "http://localhost:3000/api/v1/cxc/" + id + "/ingreso_cxc",
+            type: "POST",
+            contentType: "application/json",
+            data: jsonData,
+            success: function (response) {
+                $("#data-table").DataTable().destroy();
+                $("#modal-actualizar_cxc").modal("hide"); // Ocultar modal después de actualizar
+                mostrarCXC(); // Actualizar tabla después de actualizar sucursal
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error(textStatus + " - " + errorThrown);
+            },
+        });
+        $("#modal-actualizar_cxc").modal("hide"); // Ocultar modal después de actualizar
+    });
+
+    //------------------------------------------------------
+    //-----------------AGREGAR MONTO A CUOTAS---------------
+    //------------------------------------------------------
+
+    $("#actualizar-form_cuota").on("submit", function (event) {
+        event.preventDefault();
+        var id = $("#actualizar-id").val();
+        var monto_pagar = $("#actualizar-monto_pagar").val();
+        var descripcion = $("#actualizar-descripcion").val();
+        console.log(id + " " + monto_pagar + " " + descripcion);
+        var dataToSend = {
+            movimiento_caja: {
+                descripcion: descripcion,
+                id_concepto_movimiento_caja: 2,
+                monto: monto_pagar,
+                id_caja: 2,
+            },
+        };
+        var jsonData = JSON.stringify(dataToSend);
+        $.ajax({
+            url: "http://localhost:3000/api/v1/cxc/" + id + "/ingreso_cxc",
+            type: "POST",
+            contentType: "application/json",
+            data: jsonData,
+            success: function (response) {
+                $("#data-table").DataTable().destroy();
+                $("#modal-actualizar_cuota").modal("hide"); // Ocultar modal después de actualizar
+                mostrarCuotas(); // Actualizar tabla después de actualizar sucursal
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error(textStatus + " - " + errorThrown);
+            },
+        });
+        $("#modal-actualizar_cuota").modal("hide"); // Ocultar modal después de actualizar
+    });
 });

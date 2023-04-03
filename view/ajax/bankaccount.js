@@ -63,6 +63,9 @@ $(document).ready(function () {
     function actualizarValor(valor) {
         var input = $("#saldo");
         var monto = parseInt(input.val() || 0);
+        if (valor < 0 && monto < 100) {
+            return; // No se permite restar si el monto es menor a 100
+        }
         input.val(monto + valor);
     }
     //------------------------------------------------------

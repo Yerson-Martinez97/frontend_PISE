@@ -108,17 +108,21 @@ $(document).ready(function () {
                 data: jsonData,
                 success: function (response) {
                     // Actualizar tabla después de agregar nueva sucursal
-                    alert("Se ha retirado correctamente");
-                    $("#monto").val("");
-                    $("#descripcion").val("");
-                    var sel_banco_select = $("#banco-select");
-                    sel_banco_select.empty();
-                    mostrarBancos();
-                    var sel_concepto = $("#concepto-select");
-                    sel_concepto.empty();
-                    mostrarConcepto();
-                    $("#id_usuario").val("");
-                    window.location.href = "index.php?page=a_bank";
+                    if (response.status != "error") {
+                        alert("Se ha retirado correctamente");
+                        $("#monto").val("");
+                        $("#descripcion").val("");
+                        var sel_banco_select = $("#banco-select");
+                        sel_banco_select.empty();
+                        mostrarBancos();
+                        var sel_concepto = $("#concepto-select");
+                        sel_concepto.empty();
+                        mostrarConcepto();
+                        $("#id_usuario").val("");
+                        window.location.href = "index.php?page=a_bank";
+                    }else{
+                        alert(response.message);
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error(textStatus + " - " + errorThrown);

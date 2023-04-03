@@ -22,9 +22,6 @@ date_default_timezone_set('America/La_Paz');
     <link href="view/layouts/css/banco.css" rel="stylesheet" />
 
 
-    <!-- DATATABLES -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
@@ -49,6 +46,7 @@ date_default_timezone_set('America/La_Paz');
     <link href="view/layouts/assets/vendor/simple-datatables/style.css" rel="stylesheet">
     <link href="view/layouts/assets/css/style.css" rel="stylesheet">
 
+    <!-- DATATABLES -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
 </head>

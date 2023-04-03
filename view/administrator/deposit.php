@@ -36,7 +36,7 @@ if (isset($_SESSION['datos']) && isset($_SESSION['datos']['id_tipo_usuario'])) {
                     </div>
                     <div class="mb-3">
                         <label for="cuenta_banco-select" class="form-label">Cuenta Banco</label>
-                        <select class="form-select form-select-lg mb-3" id="cuenta_banco-select" name="tipo_activo_fijos-select" required></select>
+                        <select class="form-select form-select-lg mb-3" id="cuenta_banco-select" name="cuenta_banco-select" required></select>
                     </div>
                     <div class="mb-3">
                         <label for="concepto-select" class="form-label">Concepto Movimiento</label>

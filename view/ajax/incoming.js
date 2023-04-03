@@ -191,8 +191,6 @@ $(document).ready(function () {
                         { title: "Interes", data: "interes", width: "10%" },
                         { title: "Capital", data: "capital", width: "10%" },
                         { title: "Total", data: "total", width: "10%" },
-                        { title: "Estado", data: "estado", width: "10%" },
-                        { title: "Limite", data: "cliente.credito_limite", width: "10%" },
                         {
                             title: "Estado",
                             data: "estado",
@@ -254,7 +252,7 @@ $(document).ready(function () {
                 $("#data-table").on("click", ".btn-actualizar_cuota", function () {
                     var id = $(this).data("id");
                     // Prellenar campos del formulario con los valores de la sucursal
-                    $("#actualizar-id").val(id);
+                    $("#actualizar-id_cuota").val(id);
                     $("#modal-actualizar_cxc").modal("hide"); // Mostrar modal de actualización
                     $("#modal-actualizar_cuota").modal("show"); // Mostrar modal de actualización
                 });
@@ -266,74 +264,181 @@ $(document).ready(function () {
     }
 
     //------------------------------------------------------
-    //-----------------AGREGAR MONTO A CXC------------------
+    //-----------------MODAL AGREGAR MONTO A CXC------------
     //------------------------------------------------------
 
     $("#actualizar-form_cxc").on("submit", function (event) {
         event.preventDefault();
+        var id_cliente = $("#cliente-select").val();
+        var id_caja = $("#id_caja").val();
         var id = $("#actualizar-id").val();
-        var monto_pagar = $("#actualizar-monto_pagar").val();
-        var descripcion = $("#actualizar-descripcion").val();
-        console.log(id + " " + monto_pagar + " " + descripcion);
-        var dataToSend = {
-            movimiento_caja: {
-                descripcion: descripcion,
-                id_concepto_movimiento_caja: 2,
-                monto: monto_pagar,
-                id_caja: 2,
-            },
-        };
-        var jsonData = JSON.stringify(dataToSend);
+
         $.ajax({
-            url: "http://localhost:3000/api/v1/cxc/" + id + "/ingreso_cxc",
-            type: "POST",
-            contentType: "application/json",
-            data: jsonData,
+            url: "http://localhost:3000/api/v1/clientes/" + id_cliente + "/find_cxc",
+            type: "GET",
+            dataType: "json",
             success: function (response) {
-                $("#data-table").DataTable().destroy();
-                $("#modal-actualizar_cxc").modal("hide"); // Ocultar modal después de actualizar
-                mostrarCXC(); // Actualizar tabla después de actualizar sucursal
+                // Recorrer el arreglo con $.each()
+                $.each(response, function (index, item) {
+                    if (item.id == id) {
+                        var cantidad = parseFloat($("#actualizar-monto_pagar").val());
+                        // El valor de la propiedad "deuda_capital" del objeto actual es igual a la variable "cantidad"
+                        if (cantidad <= item.monto_deuda_actual) {
+                            alert("ok");
+                            id = $("#actualizar-id").val();
+                            var monto_pagar = $("#actualizar-monto_pagar").val();
+                            var descripcion = $("#actualizar-descripcion").val();
+                            console.log(id + " " + monto_pagar + " " + descripcion);
+                            var dataToSend = {
+                                movimiento_caja: {
+                                    descripcion: descripcion,
+                                    id_concepto_movimiento_caja: 2,
+                                    monto: monto_pagar,
+                                    id_caja: id_caja,
+                                },
+                            };
+                            var jsonData = JSON.stringify(dataToSend);
+                            $.ajax({
+                                url: "http://localhost:3000/api/v1/cxc/" + id + "/ingreso_cxc",
+                                type: "POST",
+                                contentType: "application/json",
+                                data: jsonData,
+                                success: function (response) {
+                                    // $("#modal-actualizar_cxc").modal("hide"); // Ocultar modal después de actualizar
+                                    // $("#data-table").DataTable().destroy();
+                                    // mostrarCXC(); // Actualizar tabla después de actualizar sucursal
+                                    window.location.href = "index.php?page=movementhistorybox";
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    console.error(textStatus + " - " + errorThrown);
+                                },
+                            });
+                        } else {
+                            alert("Cantidad excedida");
+                        }
+                        // Salir del bucle $.each() con "return false;"
+                        return false;
+                    }
+                });
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error(textStatus + " - " + errorThrown);
             },
         });
+        //
         $("#modal-actualizar_cxc").modal("hide"); // Ocultar modal después de actualizar
     });
 
     //------------------------------------------------------
-    //-----------------AGREGAR MONTO A CUOTAS---------------
+    //-----------------MODAL AGREGAR MONTO A OTRO---------------
+    //------------------------------------------------------
+    $("#btn-otros").on("click", function (event) {
+        event.preventDefault();
+        // var cliente = $("#cliente-select").val();
+        if ($.fn.DataTable.isDataTable("#data-table")) {
+            $("#data-table").DataTable().destroy();
+        }
+        var cli = $("#cliente-select").val();
+        $("#actualizar-id_otro").val(cli);
+
+        $("#modal-actualizar_otro").modal("show"); // Ocultar modal después de actualizar
+
+    });
+
+    //------------------------------------------------------
+    //----------------- AGREGAR MONTO DE OTRO---------------
     //------------------------------------------------------
 
-    $("#actualizar-form_cuota").on("submit", function (event) {
+    $("#actualizar-form_otro").on("submit", function (event) {
         event.preventDefault();
-        var id = $("#actualizar-id").val();
-        var monto_pagar = $("#actualizar-monto_pagar").val();
-        var descripcion = $("#actualizar-descripcion").val();
-        console.log(id + " " + monto_pagar + " " + descripcion);
+        var id_contacto = $("#actualizar-id_otro").val();
+        var descripcion = $("#actualizar-descripcion_otro").val();
+        var monto = $("#actualizar-monto_otro").val();
+        var id_caja = $("#id_caja").val();
+
+        // alert(id_contacto + " " + descripcion + " " + monto);
+
         var dataToSend = {
             movimiento_caja: {
                 descripcion: descripcion,
-                id_concepto_movimiento_caja: 2,
-                monto: monto_pagar,
-                id_caja: 2,
+                id_concepto_movimiento_caja: 4,
+                monto: monto,
+                id_caja: id_caja,
+                id_contacto: id_contacto,
             },
         };
         var jsonData = JSON.stringify(dataToSend);
         $.ajax({
-            url: "http://localhost:3000/api/v1/cxc/" + id + "/ingreso_cxc",
+            url: "http://localhost:3000/api/v1/movimiento_caja/ingreso",
             type: "POST",
             contentType: "application/json",
             data: jsonData,
             success: function (response) {
-                $("#data-table").DataTable().destroy();
-                $("#modal-actualizar_cuota").modal("hide"); // Ocultar modal después de actualizar
-                mostrarCuotas(); // Actualizar tabla después de actualizar sucursal
+                alert("Monto ingresado correctamente");
+                $("#actualizar-descripcion_otro").val("");
+                $("#actualizar-monto_otro").val("");
+                var descripcion = $("#actualizar-descripcion_otro").val();
+
+                $("#modal-actualizar_otro").modal("hide"); // Ocultar modal después de actualizar
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error(textStatus + " - " + errorThrown);
             },
         });
-        $("#modal-actualizar_cuota").modal("hide"); // Ocultar modal después de actualizar
+
+        // $.ajax({
+        //     url: "http://localhost:3000/api/v1/clientes/" + id_cliente + "/find_cxc",
+        //     type: "GET",
+        //     dataType: "json",
+        //     success: function (response) {
+        //         // Recorrer el arreglo con $.each()
+        //         $.each(response, function (index, item) {
+        //             if (item.id == id) {
+        //                 var cantidad = parseFloat($("#actualizar-monto_pagar").val());
+        //                 // El valor de la propiedad "deuda_capital" del objeto actual es igual a la variable "cantidad"
+        //                 if (cantidad <= item.monto_deuda_actual) {
+        //                     alert("ok");
+        //                     id = $("#actualizar-id").val();
+        //                     var monto_pagar = $("#actualizar-monto_pagar").val();
+        //                     var descripcion = $("#actualizar-descripcion").val();
+        //                     console.log(id + " " + monto_pagar + " " + descripcion);
+        //                     var dataToSend = {
+        //                         movimiento_caja: {
+        //                             descripcion: descripcion,
+        //                             id_concepto_movimiento_caja: 2,
+        //                             monto: monto_pagar,
+        //                             id_caja: 2,
+        //                         },
+        //                     };
+        //                     var jsonData = JSON.stringify(dataToSend);
+        //                     $.ajax({
+        //                         url: "http://localhost:3000/api/v1/cxc/" + id + "/ingreso_cxc",
+        //                         type: "POST",
+        //                         contentType: "application/json",
+        //                         data: jsonData,
+        //                         success: function (response) {
+        //                             // $("#modal-actualizar_cxc").modal("hide"); // Ocultar modal después de actualizar
+        //                             // $("#data-table").DataTable().destroy();
+        //                             // mostrarCXC(); // Actualizar tabla después de actualizar sucursal
+        //                             window.location.href = "index.php?page=movementhistory";
+        //                         },
+        //                         error: function (jqXHR, textStatus, errorThrown) {
+        //                             console.error(textStatus + " - " + errorThrown);
+        //                         },
+        //                     });
+        //                 } else {
+        //                     alert("Cantidad excedida");
+        //                 }
+        //                 // Salir del bucle $.each() con "return false;"
+        //                 return false;
+        //             }
+        //         });
+        //     },
+        //     error: function (jqXHR, textStatus, errorThrown) {
+        //         console.error(textStatus + " - " + errorThrown);
+        //     },
     });
+    //
+    $("#modal-actualizar_cxc").modal("hide"); // Ocultar modal después de actualizar
+    // });
 });

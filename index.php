@@ -47,7 +47,14 @@ if (isset($_GET['page'])) {
             require "Controller/controller.php";
             Controller::movementHistory();
             break;
-
+        case 'openbox':
+            require "Controller/controller.php";
+            Controller::openBox();
+            break;
+        case 'startbox':
+            require "Controller/controller.php";
+            Controller::startBox();
+            break;
         case 'incoming':
             require "Controller/controller.php";
             Controller::incoming();
@@ -56,7 +63,14 @@ if (isset($_GET['page'])) {
             require "Controller/controller.php";
             Controller::outgoing();
             break;
-
+        case 'movementhistorybox':
+            require "Controller/controller.php";
+            Controller::movementHistoryBox();
+            break;
+        case 'closebox':
+            require "Controller/controller.php";
+            Controller::closeBox();
+            break;
         case 'logout':
             require "Controller/controller.php";
             Controller::logout();

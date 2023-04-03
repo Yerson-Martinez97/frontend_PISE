@@ -68,7 +68,22 @@ class Controller
     {
         include_once 'view/administrator/outgoing.php';
     }
-
+    static function openBox()
+    {
+        include_once 'view/administrator/openbox.php';
+    }
+    static function startBox()
+    {
+        include_once 'view/administrator/startbox.php';
+    }
+    static function movementHistoryBox()
+    {
+        include_once 'view/administrator/movementhistorybox.php';
+    }
+    static function closeBox()
+    {
+        include_once 'view/administrator/closebox.php';
+    }
     static function logout()
     {
         session_start();

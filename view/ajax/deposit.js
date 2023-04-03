@@ -131,7 +131,7 @@ $(document).ready(function () {
                     sel_concepto.empty();
                     mostrarConcepto();
                     $("#id_usuario").val("");
-                    window.location.href = "index.php?page=a_bank";
+                    window.location.href = "index.php?page=movementhistory";
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error(textStatus + " - " + errorThrown);

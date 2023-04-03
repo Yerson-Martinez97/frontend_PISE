@@ -5,7 +5,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
+            <!-- <img src="assets/img/logo.png" alt=""> -->
             <span class="d-none d-lg-block">PISE</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -129,7 +129,16 @@
                 <i class="bi bi-menu-button-wide"></i><span>Movimiento Caja</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="caja-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
+                <li>
+                    <a href="index.php?page=openbox">
+                        <i class="bi"></i><span>Apertura Caja</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.php?page=startbox">
+                        <i class="bi"></i><span>Continuar Caja</span>
+                    </a>
+                </li>
                 <li>
                     <a href="index.php?page=incoming">
                         <i class="bi"></i><span>Ingreso</span>
@@ -141,13 +150,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="index.php?page=closebox">
                         <i class="bi"></i><span>Cierre Caja</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="bi"></i><span>Historial Caja</span>
+                    <a href="index.php?page=movementhistorybox">
+                        <i class="bi"></i><span>Historial Movimientos Caja</span>
                     </a>
                 </li>
             </ul>

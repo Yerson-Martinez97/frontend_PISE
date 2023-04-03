@@ -4,7 +4,7 @@ if (isset($_SESSION['datos']) && isset($_SESSION['datos']['id_tipo_usuario'])) {
     require_once("view/layouts/navadministrator.php");
 ?>
     <div class="pagetitle">
-        <h1>Activos Fijos</h1>
+        <h1>Retiro</h1>
         <nav>
             <ol class="breadcrumb">
                 <!-- <li class="breadcrumb-item"><a href="index.php?page=a_bank">Inicio</a></li> -->
@@ -21,41 +21,36 @@ if (isset($_SESSION['datos']) && isset($_SESSION['datos']['id_tipo_usuario'])) {
                 <!-- FORMULARIO -->
                 <form id="agregar-form">
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Activo Fijo</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" autocomplete="off" />
+                        <label for="monto" class="form-label">Monto</label>
+                        <input type="number" class="form-control" id="monto" name="monto" pattern="[0-9]+(\.[0-9]+)?" required />
                     </div>
                     <div class="mb-3">
-                        <label for="fecha_adquisicion" class="form-label">Fecha Adquisicion</label>
-                        <input type="date" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" />
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion" name="descripcion" autocomplete="off" required />
                     </div>
                     <div class="mb-3">
-                        <label for="costo_adquisicion" class="form-label">Costo Adquisicion</label>
-                        <input type="number" class="form-control" id="costo_adquisicion" name="costo_adquisicion" pattern="[0-9]+(\.[0-9]+)?" />
+                        <label for="banco-select" class="form-label">Banco</label>
+                        <select class="form-select form-select-lg mb-3" id="banco-select" name="banco-select" required></select>
                     </div>
+                    <div class="mb-3">
+                        <label for="cuenta_banco-select" class="form-label">Cuenta Banco</label>
+                        <select class="form-select form-select-lg mb-3" id="cuenta_banco-select" name="tipo_activo_fijos-select" required></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="concepto-select" class="form-label">Concepto Movimiento</label>
+                        <select class="form-select form-select-lg mb-3" id="concepto-select" name="concepto-select" required></select>
+                    </div>
+                    <input type="hidden" id="id_usuario" name="id_usuario" value="<?php echo $_SESSION['datos']['id_usuario'] ?>">
+                    <div class="mb-3 text-center">
+                        <button type="submit" class="btn btn-success text-center">Retirar</button>
 
-                    <div class="mb-3">
-                        <label for="porcentaje_vida_util" class="form-label">% Vida Util</label>
-                        <input type="number" class="form-control" id="porcentaje_vida_util" name="porcentaje_vida_util" pattern="[0-9]+(\.[0-9]+)?" />
                     </div>
-                    <div class="mb-3">
-                        <label for="codigo" class="form-label">Código</label>
-                        <input type="text" class="form-control" id="codigo" name="codigo" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="sucursal-select" class="form-label">Sucursal</label>
-                        <select class="form-select form-select-lg mb-3" id="sucursal-select" name="sucursal-select"></select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tipo_activo_fijos-select" class="form-label">Tipo Activo</label>
-                        <select class="form-select form-select-lg mb-3" id="tipo_activo_fijos-select" name="tipo_activo_fijos-select"></select>
-                    </div>
-                    <button type="submit" class="btn btn-success">Agregar</button>
                 </form>
             </div>
             <div class="col-md-8 mb-4"></div>
-            <!-- TABLA ACTIVO FIJO -->
-            <div class="col-md-12 col-lg-12 table-responsive">
-                <table id="data-table" class="w-100 text-center">
+            <!-- TABLA DEPOSITOS -->
+            <div class="col-md-12 table-responsive">
+                <table id="data-table" class="table text-center">
                     <tbody></tbody>
                 </table>
             </div>
@@ -119,7 +114,7 @@ if (isset($_SESSION['datos']) && isset($_SESSION['datos']['id_tipo_usuario'])) {
         </div>
         </body>
 
-        <script src="view/ajax/fixedasset.js"></script>
+        <script src="view/ajax/withdrawal.js"></script>
         <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
     <?php
 } else {

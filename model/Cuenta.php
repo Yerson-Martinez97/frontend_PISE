@@ -13,7 +13,8 @@ class Cuenta
     {
         $usr = $_GET['usr'];
         $pwd = $_GET['pwd'];
-        $stmt = $this->conexion->prepare("SELECT 
+        $stmt = $this->conexion->prepare("SELECT
+        USU.id as id_usuario, 
         USU.id_tipo_usuario as id_tipo_usuario,
         CO.nombre as nombre,
         TU.nombre as tipo_usuario

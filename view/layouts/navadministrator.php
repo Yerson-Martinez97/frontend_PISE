@@ -88,18 +88,18 @@
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
                 <li>
-                    <a href="#">
-                        <i class="bi"></i><span>Ingresos</span>
+                    <a href="index.php?page=deposit">
+                        <i class="bi"></i><span>Depositos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="bi"></i><span>Egresos</span>
+                    <a href="index.php?page=withdrawal">
+                        <i class="bi"></i><span>Retiros</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="bi"></i><span>Movimientos</span>
+                    <a href="index.php?page=movementhistory">
+                        <i class="bi"></i><span>Historial Movimientos</span>
                     </a>
                 </li>
             </ul>
@@ -122,7 +122,37 @@
                 <span>Sucursales</span>
             </a>
         </li>
-        <li class="nav-heading"></li>
+
+        <li class="nav-heading">Caja</li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#caja-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i><span>Movimiento Caja</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="caja-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                <li>
+                    <a href="index.php?page=incoming">
+                        <i class="bi"></i><span>Ingreso</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.php?page=outgoing">
+                        <i class="bi"></i><span>Egreso</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bi"></i><span>Cierre Caja</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bi"></i><span>Historial Caja</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Components Nav -->
+        <li class="nav-heading">Mas</li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="#">

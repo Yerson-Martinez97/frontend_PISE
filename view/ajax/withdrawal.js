@@ -75,28 +75,15 @@ $(document).ready(function () {
     //------------------------------------------------------
     $("#agregar-form").on("submit", function (event) {
         if (confirm("¿Estás seguro que deseas retirar este monto?")) {
+            // Ejecutar AJAX
             event.preventDefault();
             // var id_banco = $("#sucursal-select").val();
             var monto = $("#monto").val();
             var descripcion = $("#descripcion").val();
-            var id_banco = $("#banco-select").val();
+            // var id_banco = $("#banco-select").val();
             var id_cuenta_banco = $("#cuenta_banco-select").val();
             var id_concepto = $("#concepto-select").val();
             var id_usuario = $("#id_usuario").val();
-
-            // alert(
-            //     monto +
-            //         " " +
-            //         descripcion +
-            //         " " +
-            //         id_banco +
-            //         " " +
-            //         id_cuenta_banco +
-            //         " " +
-            //         id_concepto +
-            //         " " +
-            //         id_usuario
-            // );
 
             // Crear objeto con datos a enviar
             var dataToSend = {
@@ -115,13 +102,13 @@ $(document).ready(function () {
                 url:
                     "http://localhost:3000/api/v1/cuenta_bancos/" +
                     id_cuenta_banco +
-                    "/movimiento_bancos/create_deposit",
+                    "/movimiento_bancos/create_withdrawal",
                 type: "POST",
                 contentType: "application/json",
                 data: jsonData,
                 success: function (response) {
                     // Actualizar tabla después de agregar nueva sucursal
-                    alert("Se ha depositado correctamente");
+                    alert("Se ha retirado correctamente");
                     $("#monto").val("");
                     $("#descripcion").val("");
                     var sel_banco_select = $("#banco-select");

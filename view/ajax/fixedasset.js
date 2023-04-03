@@ -135,7 +135,7 @@ $(document).ready(function () {
                         { title: "Fecha Baja", data: "fecha_baja", width: "10%" },
                         { title: "Código", data: "codigo", width: "10%" },
                         { title: "Sucursal", data: "sucursal.nombre", width: "10%" },
-                        { title: "Tipo Activo", data: "tipo_activo_fijo.nombre", width: "10%" },
+                        { title: "Tipo Activo", data: "tipo_activo_fijo.nombre" },
                         {
                             title: "Valor Depreciado",
                             render: function (data, type, row, meta) {

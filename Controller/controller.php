@@ -48,6 +48,27 @@ class Controller
     {
         include_once 'view/administrator/contact_user.php';
     }
+    static function deposit()
+    {
+        include_once 'view/administrator/deposit.php';
+    }
+    static function withdrawal()
+    {
+        include_once 'view/administrator/withdrawal.php';
+    }
+    static function movementHistory()
+    {
+        include_once 'view/administrator/movementhistory.php';
+    }
+    static function incoming()
+    {
+        include_once 'view/administrator/incoming.php';
+    }
+    static function outgoing()
+    {
+        include_once 'view/administrator/outgoing.php';
+    }
+
     static function logout()
     {
         session_start();

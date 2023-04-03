@@ -35,6 +35,28 @@ if (isset($_GET['page'])) {
             require "Controller/controller.php";
             Controller::contactUser();
             break;
+        case 'deposit':
+            require "Controller/controller.php";
+            Controller::deposit();
+            break;
+        case 'withdrawal':
+            require "Controller/controller.php";
+            Controller::withdrawal();
+            break;
+        case 'movementhistory':
+            require "Controller/controller.php";
+            Controller::movementHistory();
+            break;
+
+        case 'incoming':
+            require "Controller/controller.php";
+            Controller::incoming();
+            break;
+        case 'outgoing':
+            require "Controller/controller.php";
+            Controller::outgoing();
+            break;
+
         case 'logout':
             require "Controller/controller.php";
             Controller::logout();
